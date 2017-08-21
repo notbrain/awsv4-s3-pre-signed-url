@@ -97,7 +97,7 @@ function buildCanonicalRequest(document, verb, scope, signingDates) {
   canonicalRequestObj.canonicalRequest = `${verb}\n${docURI}\n${queryString}\n${headers}\n\n${signedHeaders}\nUNSIGNED-PAYLOAD`.trimLeft();
 
   // console.log(JSON.stringify(canonicalRequestObj, null, 2));
-  console.log('\n\n------------[canonicalRequest]------------\n' + canonicalRequestObj.canonicalRequest);
+  console.log('\n------------[canonicalRequest]------------\n' + canonicalRequestObj.canonicalRequest);
   console.log('------------[/canonicalRequest]------------\n');
 
   return canonicalRequestObj;
@@ -120,7 +120,7 @@ function getStringToSign(canonicalRequest, signingDates, scope) {
 
   const stringToSign = `AWS4-HMAC-SHA256\n${signingDates.longDate}\n${scope}\n${encodedCanonicalRequest}`;
 
-  console.log('\n\n[         encoded canonical request] ' + encodedCanonicalRequest);
+  console.log('[         encoded canonical request] ' + encodedCanonicalRequest);
   console.log('[expected encoded canonical request] 3bfa292879f6447bbcda7001decf97f4a54dc650c8942174ae0a9121cf58ad04');
 
   return stringToSign;
@@ -143,13 +143,13 @@ function getSignature(stringToSign, signingDates) {
   // Same result as less readable from docs:
   // const signingKey = sha256hmac(sha256hmac(sha256hmac(sha256hmac("AWS4" + S3_SECRET_KEY,signingDates.shortDate),S3_REGION),S3_SERVICE),S3_REQUEST_TYPE);
 
-  console.log('\n\n[Calculated signingKey] ' + signingKey);
-  console.log('[  Expected signingKey] NOT PROVIDED');
+  console.log('\n[calculated signingKey] ' + signingKey);
+  console.log('[  expected signingKey] NOT PROVIDED');
 
   const signature = sha256hmac(signingKey, stringToSign);
 
-  console.log('\n\n[Calculated signature] ' + signature);
-  console.log('[  Expected signature] aeeed9bbccd4d02ee5c0109b86d86835f995330da4c265957d157751f604d404');
+  console.log('\n[calculated signature] ' + signature);
+  console.log('[  expected signature] aeeed9bbccd4d02ee5c0109b86d86835f995330da4c265957d157751f604d404');
 
   return signature;
 
