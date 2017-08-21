@@ -6,7 +6,7 @@ http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
 
 ![AWS V4 Signing Flow](http://docs.aws.amazon.com/AmazonS3/latest/API/images/sigV4-using-query-params.png)
 
-Looks like the HMAC function is not returning what the Amazon HMAC is returning.
+Looks like the SHA256 HMAC function is not returning what the Amazon SHA256 HMAC is returning.
 
 # Installation
 
