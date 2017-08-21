@@ -143,12 +143,12 @@ function getSignature(stringToSign, signingDates) {
   // Same result as less readable from docs:
   // const signingKey = sha256hmac(sha256hmac(sha256hmac(sha256hmac("AWS4" + S3_SECRET_KEY,signingDates.shortDate),S3_REGION),S3_SERVICE),S3_REQUEST_TYPE);
 
-  console.log('\n\n[Calculated signingKey] '+signingKey);
+  console.log('\n\n[Calculated signingKey] ' + signingKey);
   console.log('[  Expected signingKey] NOT PROVIDED');
 
   const signature = sha256hmac(signingKey, stringToSign);
 
-  console.log('\n\n[Calculated signature] '+signature);
+  console.log('\n\n[Calculated signature] ' + signature);
   console.log('[  Expected signature] aeeed9bbccd4d02ee5c0109b86d86835f995330da4c265957d157751f604d404');
 
   return signature;
