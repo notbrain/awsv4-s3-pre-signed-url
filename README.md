@@ -4,6 +4,8 @@ Looking for help as to why this implementation does not comply with the referenc
 
 http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
 
+This mini-app uses the example values referenced on that page.
+
 ![AWS V4 Signing Flow](http://docs.aws.amazon.com/AmazonS3/latest/API/images/sigV4-using-query-params.png)
 
 Looks like the SHA256 HMAC function is not returning what the Amazon SHA256 HMAC is returning.
