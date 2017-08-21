@@ -4,6 +4,8 @@ Looking for help as to why this implementation does not comply with the referenc
 
 http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
 
+![AWS V4 Signing Flow](http://docs.aws.amazon.com/AmazonS3/latest/API/images/sigV4-using-query-params.png)
+
 # Installation
 
 `git clone git@github.com:notbrain/awsv4-s3-pre-signed-url.git`
