@@ -85,7 +85,7 @@ function buildCanonicalRequest(document, verb, scope, signingDates) {
 
   const { docURI, headers, signedHeaders } = canonicalRequestObj;
 
-  canonicalRequestObj.canonicalRequest = `${verb}\n${docURI}\n${queryString}\n${headers}\n\n${signedHeaders}\nUNSIGNED-PAYLOAD`.trimLeft();
+  canonicalRequestObj.canonicalRequest = `${verb}\n${docURI}\n${queryString}\n${headers}\n\n${signedHeaders}\nUNSIGNED-PAYLOAD`;
 
   // console.log(JSON.stringify(canonicalRequestObj, null, 2));
   console.log('\n------------[canonicalRequest]------------\n' + canonicalRequestObj.canonicalRequest);
