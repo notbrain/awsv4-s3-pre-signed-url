@@ -19,7 +19,7 @@ const S3_REQUEST_TYPE        = 'aws4_request';
  * @param  {string} encoding  (Optional) The encoding to output
  * @return {string}           The result of the HMAC-SHA256
  */
-function sha256hmac(key, string, encoding = 'hex') {
+function sha256hmac(key, string, encoding) {
   return crypto.createHmac('sha256', key).update(string, 'utf8').digest(encoding);
 };
 
@@ -30,7 +30,7 @@ function sha256hmac(key, string, encoding = 'hex') {
  * @param  {string} encoding  (Optional) The encoding to output
  * @return {string}           The result of the HMAC-SHA256
  */
-function sha256hash(string, encoding = 'hex') {
+function sha256hash(string, encoding) {
   return crypto.createHash('sha256').update(string, 'utf8').digest(encoding);
 };
 
@@ -135,18 +135,13 @@ function getStringToSign(canonicalRequest, signingDates, scope) {
  */
 function getSignature(stringToSign, signingDates) {
 
-  const dateKey              = sha256hmac('AWS4' + S3_SECRET_KEY, signingDates.shortDate);
-  const dateRegionKey        = sha256hmac(dateKey, S3_REGION);
+  // leaving off encoding causes hmac to return buffer
+  // only need to return hex at last step
+  const dateKey = sha256hmac('AWS4' + S3_SECRET_KEY, signingDates.shortDate);
+  const dateRegionKey = sha256hmac(dateKey, S3_REGION);
   const dateRegionServiceKey = sha256hmac(dateRegionKey, S3_SERVICE);
-  const signingKey           = sha256hmac(dateRegionServiceKey, S3_REQUEST_TYPE);
-
-  // Same result as less readable from docs:
-  // const signingKey = sha256hmac(sha256hmac(sha256hmac(sha256hmac("AWS4" + S3_SECRET_KEY,signingDates.shortDate),S3_REGION),S3_SERVICE),S3_REQUEST_TYPE);
-
-  console.log('\n[calculated signingKey] ' + signingKey);
-  console.log('[  expected signingKey] NOT PROVIDED');
-
-  const signature = sha256hmac(signingKey, stringToSign);
+  const signingKey = sha256hmac(dateRegionServiceKey, S3_REQUEST_TYPE);
+  const signature = sha256hmac(signingKey, stringToSign, 'hex');
 
   console.log('\n[calculated signature] ' + signature);
   console.log('[  expected signature] aeeed9bbccd4d02ee5c0109b86d86835f995330da4c265957d157751f604d404');
