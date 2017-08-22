@@ -14,10 +14,11 @@ const S3_REQUEST_TYPE        = 'aws4_request';
 
 /**
  * hmac helper function to wrap crypto.createHmac
+
  * @param  {string} key       The secret key
  * @param  {string} string    The string to encode
  * @param  {string} encoding  (Optional) The encoding to output
- * @return {string}           The result of the HMAC-SHA256
+ * @return {buffer|string}    If no encoding, returns buffer; otherwise string
  */
 function sha256hmac(key, string, encoding) {
   return crypto.createHmac('sha256', key).update(string, 'utf8').digest(encoding);
@@ -25,6 +26,7 @@ function sha256hmac(key, string, encoding) {
 
 /**
  * hash helper function to wrap crypto.createHmac
+
  * @param  {string} key       The secret key
  * @param  {string} string    The string to encode
  * @param  {string} encoding  (Optional) The encoding to output
@@ -41,17 +43,6 @@ function getSigningDates() {
     shortDate: '20130524'
   };
 }
-
-// This function assumes the string has already been percent encoded
-// Taken from https://github.com/mhart/aws4/blob/master/aws4.js
-//
-// maybe this is needed? Not seeing where anything would be caught by this
-//
-// function encodeRfc3986(urlEncodedString) {
-//   return urlEncodedString.replace(/[!'()*]/g, function(c) {
-//     return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-//   })
-// }
 
 /**
  * Build an object with request compnents, incl combined canonical request string
